@@ -71,12 +71,12 @@ namespace :exporter do
       case ef.entities_type
       when 'Projects'
         sync(Project, ef.content, except: "affiliation")
-      # when 'Abstracts'
-      #   sync(Abstract, content)
-      # when 'Publications'
-      #   sync(Publication, content)
-      # when 'Patents'
-      #   sync(Patent, content)
+      when 'Abstracts'
+        sync(Abstract, content)
+      when 'Publications'
+        sync(Publication, content)
+      when 'Patents'
+        sync(Patent, content)
       # when 'ClinicalStudies'
       #   nil
       # when 'LinkTables'

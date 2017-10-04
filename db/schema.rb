@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004111322) do
+ActiveRecord::Schema.define(version: 20171004114750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abstracts", force: :cascade do |t|
+    t.integer  "application_id"
+    t.text     "abstract_text"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "abstracts", ["application_id"], name: "index_abstracts_on_application_id", unique: true, using: :btree
+
+  create_table "clinical_studies", force: :cascade do |t|
+    t.string   "clinical_trials_gov_id"
+    t.text     "study"
+    t.string   "study_status"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "clinical_studies", ["clinical_trials_gov_id"], name: "index_clinical_studies_on_clinical_trials_gov_id", unique: true, using: :btree
+  add_index "clinical_studies", ["study_status"], name: "index_clinical_studies_on_study_status", using: :btree
 
   create_table "exporter_files", force: :cascade do |t|
     t.string   "name"
@@ -33,6 +53,16 @@ ActiveRecord::Schema.define(version: 20171004111322) do
   add_index "exporter_files", ["file_updated_at"], name: "index_exporter_files_on_file_updated_at", using: :btree
   add_index "exporter_files", ["processed"], name: "index_exporter_files_on_processed", using: :btree
   add_index "exporter_files", ["xml_path", "csv_path"], name: "index_exporter_files_on_xml_path_and_csv_path", unique: true, using: :btree
+
+  create_table "patents", force: :cascade do |t|
+    t.string   "patent_title"
+    t.string   "patent_org_name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "patent_id"
+  end
+
+  add_index "patents", ["patent_id"], name: "index_patents_on_patent_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "application_id"
@@ -88,5 +118,34 @@ ActiveRecord::Schema.define(version: 20171004111322) do
   add_index "projects", ["core_project_num"], name: "index_projects_on_core_project_num", using: :btree
   add_index "projects", ["org_name"], name: "index_projects_on_org_name", using: :btree
   add_index "projects", ["program_officer_name"], name: "index_projects_on_program_officer_name", using: :btree
+
+  create_table "publications", force: :cascade do |t|
+    t.integer  "pmid"
+    t.string   "pub_title"
+    t.string   "country"
+    t.string   "issn"
+    t.string   "lang"
+    t.string   "page_number"
+    t.string   "pub_date"
+    t.integer  "pub_year"
+    t.string   "journal_title"
+    t.string   "journal_title_abbr"
+    t.integer  "journal_issue"
+    t.integer  "journal_volume"
+    t.string   "author_list"
+    t.integer  "pmc_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.text     "abstract"
+  end
+
+  add_index "publications", ["country"], name: "index_publications_on_country", using: :btree
+  add_index "publications", ["issn"], name: "index_publications_on_issn", using: :btree
+  add_index "publications", ["journal_issue"], name: "index_publications_on_journal_issue", using: :btree
+  add_index "publications", ["journal_volume"], name: "index_publications_on_journal_volume", using: :btree
+  add_index "publications", ["lang"], name: "index_publications_on_lang", using: :btree
+  add_index "publications", ["pmc_id"], name: "index_publications_on_pmc_id", using: :btree
+  add_index "publications", ["pmid"], name: "index_publications_on_pmid", unique: true, using: :btree
+  add_index "publications", ["pub_year"], name: "index_publications_on_pub_year", using: :btree
 
 end
