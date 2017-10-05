@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004114750) do
+ActiveRecord::Schema.define(version: 20171004160102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,14 +44,14 @@ ActiveRecord::Schema.define(version: 20171004114750) do
     t.string   "csv_path"
     t.datetime "file_updated_at"
     t.boolean  "processed",       default: false
-    t.string   "entities_type"
+    t.string   "type"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
 
-  add_index "exporter_files", ["entities_type"], name: "index_exporter_files_on_entities_type", using: :btree
   add_index "exporter_files", ["file_updated_at"], name: "index_exporter_files_on_file_updated_at", using: :btree
   add_index "exporter_files", ["processed"], name: "index_exporter_files_on_processed", using: :btree
+  add_index "exporter_files", ["type"], name: "index_exporter_files_on_type", using: :btree
   add_index "exporter_files", ["xml_path", "csv_path"], name: "index_exporter_files_on_xml_path_and_csv_path", unique: true, using: :btree
 
   create_table "patents", force: :cascade do |t|
@@ -63,6 +63,35 @@ ActiveRecord::Schema.define(version: 20171004114750) do
   end
 
   add_index "patents", ["patent_id"], name: "index_patents_on_patent_id", using: :btree
+
+  create_table "project_clinical_studies", force: :cascade do |t|
+    t.string   "core_project_number"
+    t.string   "clinical_trials_gov_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "project_clinical_studies", ["core_project_number", "clinical_trials_gov_id"], name: "index_project_clinical_studies", unique: true, using: :btree
+
+  create_table "project_patents", force: :cascade do |t|
+    t.string   "patent_id"
+    t.string   "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "project_patents", ["patent_id", "project_id"], name: "index_project_patents", unique: true, using: :btree
+
+  create_table "project_publications", force: :cascade do |t|
+    t.integer  "pmid"
+    t.string   "project_number"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "project_publications", ["pmid", "project_number"], name: "index_project_publications_on_pmid_and_project_number", unique: true, using: :btree
+  add_index "project_publications", ["pmid"], name: "index_project_publications_on_pmid", using: :btree
+  add_index "project_publications", ["project_number"], name: "index_project_publications_on_project_number", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "application_id"

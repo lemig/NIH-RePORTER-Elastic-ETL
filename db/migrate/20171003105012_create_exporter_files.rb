@@ -8,7 +8,7 @@ class CreateExporterFiles < ActiveRecord::Migration
       t.string :csv_path
       t.datetime :file_updated_at, index: true
       t.boolean :processed, index: true, default: false
-      t.string :entities_type, index: true
+      t.string :type, index: true
 
       t.timestamps null: false
     end
