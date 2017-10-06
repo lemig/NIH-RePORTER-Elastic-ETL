@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004160102) do
+ActiveRecord::Schema.define(version: 20171005140828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,13 @@ ActiveRecord::Schema.define(version: 20171004160102) do
   create_table "abstracts", force: :cascade do |t|
     t.integer  "application_id"
     t.text     "abstract_text"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "exporter_file_id"
   end
 
   add_index "abstracts", ["application_id"], name: "index_abstracts_on_application_id", unique: true, using: :btree
+  add_index "abstracts", ["exporter_file_id"], name: "index_abstracts_on_exporter_file_id", using: :btree
 
   create_table "clinical_studies", force: :cascade do |t|
     t.string   "clinical_trials_gov_id"
@@ -31,9 +33,11 @@ ActiveRecord::Schema.define(version: 20171004160102) do
     t.string   "study_status"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "exporter_file_id"
   end
 
   add_index "clinical_studies", ["clinical_trials_gov_id"], name: "index_clinical_studies_on_clinical_trials_gov_id", unique: true, using: :btree
+  add_index "clinical_studies", ["exporter_file_id"], name: "index_clinical_studies_on_exporter_file_id", using: :btree
   add_index "clinical_studies", ["study_status"], name: "index_clinical_studies_on_study_status", using: :btree
 
   create_table "exporter_files", force: :cascade do |t|
@@ -47,6 +51,7 @@ ActiveRecord::Schema.define(version: 20171004160102) do
     t.string   "type"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "record_count"
   end
 
   add_index "exporter_files", ["file_updated_at"], name: "index_exporter_files_on_file_updated_at", using: :btree
@@ -57,11 +62,13 @@ ActiveRecord::Schema.define(version: 20171004160102) do
   create_table "patents", force: :cascade do |t|
     t.string   "patent_title"
     t.string   "patent_org_name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "patent_id"
+    t.integer  "exporter_file_id"
   end
 
+  add_index "patents", ["exporter_file_id"], name: "index_patents_on_exporter_file_id", using: :btree
   add_index "patents", ["patent_id"], name: "index_patents_on_patent_id", using: :btree
 
   create_table "project_clinical_studies", force: :cascade do |t|
@@ -69,26 +76,32 @@ ActiveRecord::Schema.define(version: 20171004160102) do
     t.string   "clinical_trials_gov_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "exporter_file_id"
   end
 
   add_index "project_clinical_studies", ["core_project_number", "clinical_trials_gov_id"], name: "index_project_clinical_studies", unique: true, using: :btree
+  add_index "project_clinical_studies", ["exporter_file_id"], name: "index_project_clinical_studies_on_exporter_file_id", using: :btree
 
   create_table "project_patents", force: :cascade do |t|
     t.string   "patent_id"
     t.string   "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "exporter_file_id"
   end
 
+  add_index "project_patents", ["exporter_file_id"], name: "index_project_patents_on_exporter_file_id", using: :btree
   add_index "project_patents", ["patent_id", "project_id"], name: "index_project_patents", unique: true, using: :btree
 
   create_table "project_publications", force: :cascade do |t|
     t.integer  "pmid"
     t.string   "project_number"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "exporter_file_id"
   end
 
+  add_index "project_publications", ["exporter_file_id"], name: "index_project_publications_on_exporter_file_id", using: :btree
   add_index "project_publications", ["pmid", "project_number"], name: "index_project_publications_on_pmid_and_project_number", unique: true, using: :btree
   add_index "project_publications", ["pmid"], name: "index_project_publications_on_pmid", using: :btree
   add_index "project_publications", ["project_number"], name: "index_project_publications_on_project_number", using: :btree
@@ -141,10 +154,12 @@ ActiveRecord::Schema.define(version: 20171004160102) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.text     "project_terms"
+    t.integer  "exporter_file_id"
   end
 
   add_index "projects", ["application_id"], name: "index_projects_on_application_id", unique: true, using: :btree
   add_index "projects", ["core_project_num"], name: "index_projects_on_core_project_num", using: :btree
+  add_index "projects", ["exporter_file_id"], name: "index_projects_on_exporter_file_id", using: :btree
   add_index "projects", ["org_name"], name: "index_projects_on_org_name", using: :btree
   add_index "projects", ["program_officer_name"], name: "index_projects_on_program_officer_name", using: :btree
 
@@ -166,9 +181,11 @@ ActiveRecord::Schema.define(version: 20171004160102) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.text     "abstract"
+    t.integer  "exporter_file_id"
   end
 
   add_index "publications", ["country"], name: "index_publications_on_country", using: :btree
+  add_index "publications", ["exporter_file_id"], name: "index_publications_on_exporter_file_id", using: :btree
   add_index "publications", ["issn"], name: "index_publications_on_issn", using: :btree
   add_index "publications", ["journal_issue"], name: "index_publications_on_journal_issue", using: :btree
   add_index "publications", ["journal_volume"], name: "index_publications_on_journal_volume", using: :btree
