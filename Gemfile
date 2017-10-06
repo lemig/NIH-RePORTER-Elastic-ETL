@@ -11,6 +11,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "rubyzip"
+gem 'elasticsearch', branch: '5.x'
+gem 'elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch-model', branch: '5.x'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
