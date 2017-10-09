@@ -18,7 +18,7 @@ class CreateOrganizations < ActiveRecord::Migration
     add_index "organizations", ["country"], name: "index_organizations_on_country", using: :btree
     add_index "organizations", ["duns", "name"], name: "index_organizations_on_duns_and_name", unique: true, using: :btree
     add_index "organizations", ["duns"], name: "index_organizations_on_duns", unique: true, using: :btree
-    add_index "organizations", ["ipf_code"], name: "index_organizations_on_ipf_code", unique: true, using: :btree
+    add_index "organizations", ["ipf_code"], name: "index_organizations_on_ipf_code", using: :btree
 
     create_table "organizations_projects", id: false, force: :cascade do |t|
       t.integer "organization_id", null: false
