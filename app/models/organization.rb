@@ -7,4 +7,16 @@ class Organization < ActiveRecord::Base
     info[:country] =  Country.find_country_by_alpha3(info[:country]).alpha2 if info[:country]
     info
   end
+
+  def full_address
+    [
+      address,
+      city,
+      "#{state} #{zip}",
+      country
+    ]
+    .compact
+    .join(', ')
+    .strip
+  end
 end

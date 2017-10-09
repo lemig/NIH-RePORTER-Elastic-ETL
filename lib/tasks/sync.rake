@@ -71,5 +71,16 @@ namespace :sync do
     puts "Finished retrieving organization info from SAM.GOV"
   end
 
-  task :sync => [:meta, :data, :verify, :organizations, :sam]
+  task :geocode => :environment do
+    puts "Started geocoding organizations"
+    Organization.where("(city IS NOT NULL OR address IS NOT NULL) AND lat IS NULL").find_each do |organization|
+      coordinates = Geocoder.geocode organization.full_address
+      organization.update! coordinates unless coordinates.blank?
+      print '.'
+      sleep 0.2
+    end
+    puts "Finished geocoding organizations"
+  end
+
+  task :all => [:meta, :data, :verify, :organizations, :sam, :geocode]
 end

@@ -16,6 +16,7 @@ gem 'elasticsearch-rails', branch: '5.x'
 gem 'elasticsearch-model', branch: '5.x'
 gem 'httparty'
 gem 'countries', :require => 'countries/global'
+gem 'geokit-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
