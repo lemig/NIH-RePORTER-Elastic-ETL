@@ -14,6 +14,8 @@ gem "rubyzip"
 gem 'elasticsearch', branch: '5.x'
 gem 'elasticsearch-rails', branch: '5.x'
 gem 'elasticsearch-model', branch: '5.x'
+gem 'httparty'
+gem 'countries', :require => 'countries/global'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

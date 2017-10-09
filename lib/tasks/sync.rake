@@ -1,13 +1,15 @@
 require 'open-uri'
 
-namespace :exporter do
-  task :sync_meta => :environment do
+namespace :sync do
+  task :meta => :environment do
+    puts "Started synchronizing Exporter metadata"
     ExporterFile.sync_meta
     puts "Finished synchronizing Exporter metadata"
   end
 
 
-  task :sync_data => :environment do
+  task :data => :environment do
+    puts "Started synchronizing Exporter data"
     ExporterFile.where(processed: false).order("year DESC NULLS LAST, id ASC").each do |ef|
       puts "Processing #{ef.name}"
       ef.sync
@@ -16,13 +18,15 @@ namespace :exporter do
   end
 
   task :verify => :environment do
+    puts "Started verifying data extraction"
     ExporterFile.all.order(:id).each do |ef|
       puts "id #{ef.id}, processed:#{ef.processed}, records:#{ef.record_count}, errors:#{ef.error_count}, file:#{ef.name}"
     end
-    puts "Finished verification"
+    puts "Finished verifying data extraction"
   end
 
-  task :extract_organizations => :environment do
+  task :organizations => :environment do
+    puts "Started organization extraction"
     count = 0
     Project.includes(:organizations).find_each do |project|
       next if project.organizations.any?
@@ -53,8 +57,19 @@ namespace :exporter do
       end
       puts count if count % 1000 == 0
     end
-    puts "Finished extracting organizations"
+    puts "Finished organization extraction"
   end
 
-  task :sync => [:sync_meta, :sync_data, :verify, :extract_organizations]
+  task :sam => :environment do
+    puts "Started retrieving organization info from SAM.GOV"
+    Organization.where(address: nil).where.not(duns:nil).find_each do |organization|
+      info = organization.get_info
+      organization.update! info
+      print '.'
+      sleep 0.2
+    end
+    puts "Finished retrieving organization info from SAM.GOV"
+  end
+
+  task :sync => [:meta, :data, :verify, :organizations, :sam]
 end
