@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006144506) do
+ActiveRecord::Schema.define(version: 20171010100440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,33 @@ ActiveRecord::Schema.define(version: 20171006144506) do
 
   add_index "patents", ["exporter_file_id"], name: "index_patents_on_exporter_file_id", using: :btree
   add_index "patents", ["patent_id"], name: "index_patents_on_patent_id", using: :btree
+
+  create_table "people", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "pi_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "people", ["name"], name: "index_people_on_name", using: :btree
+  add_index "people", ["pi_id", "name"], name: "index_people_on_pi_id_and_name", unique: true, using: :btree
+  add_index "people", ["pi_id"], name: "index_people_on_pi_id", unique: true, using: :btree
+
+  create_table "people_projects", id: false, force: :cascade do |t|
+    t.integer "person_id",  null: false
+    t.integer "project_id", null: false
+  end
+
+  add_index "people_projects", ["person_id", "project_id"], name: "index_people_projects_on_person_id_and_project_id", unique: true, using: :btree
+  add_index "people_projects", ["project_id", "person_id"], name: "index_people_projects_on_project_id_and_person_id", unique: true, using: :btree
+
+  create_table "people_publications", id: false, force: :cascade do |t|
+    t.integer "person_id",      null: false
+    t.integer "publication_id", null: false
+  end
+
+  add_index "people_publications", ["person_id", "publication_id"], name: "index_people_publications_on_person_id_and_publication_id", unique: true, using: :btree
+  add_index "people_publications", ["publication_id", "person_id"], name: "index_people_publications_on_publication_id_and_person_id", unique: true, using: :btree
 
   create_table "project_clinical_studies", force: :cascade do |t|
     t.string   "core_project_number"

@@ -82,5 +82,52 @@ namespace :sync do
     puts "Finished geocoding organizations"
   end
 
-  task :all => [:meta, :data, :verify, :organizations, :sam, :geocode]
+  task :principal_investigators => :environment do
+    puts "Started extracting principal investigators"
+    Project.all.includes(:people).find_each do |project|
+      next if project.pis.blank?
+      next if project.people.any?
+
+      pis = project.pis["pi"]
+      pis = [pis] unless pis.kind_of? Array
+
+      pis.each do |pi|
+        begin
+          pi_name = pi['PI_NAME'] || pi['pi_name']
+          pi_name = pi_name.gsub('(contact)', '').strip
+          pi_id = pi['PI_ID'] || pi['pi_id']
+          pi_id = pi_id.gsub('(contact)', '').strip.to_i
+
+          person = Person.find_or_create_by pi_id: pi_id, name: pi_name
+          person.projects << project unless project.in? person.projects
+          person.save
+          print '.'
+        rescue
+          print 'e'
+        end
+      end
+    end
+    puts "Finished extracting principal investigators"
+  end
+
+  task :authors => :environment do
+    puts "Started extracting authors"
+    Publication.all.includes(:authors).find_each do |publication|
+      next if publication.authors.any?
+
+      publication.author_name.each do |name|
+        begin
+          person = Person.find_or_create_by pi_id: nil, name: name
+          person.publications << publication unless publication.in? person.publications
+          person.save
+          print '.'
+        rescue
+          print 'e'
+        end
+      end
+    end
+    puts "Finished extracting authors"
+  end
+
+  task :all => [:meta, :data, :verify, :organizations, :sam, :geocode, :principal_investigators, :authors]
 end
