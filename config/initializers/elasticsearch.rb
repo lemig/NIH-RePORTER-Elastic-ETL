@@ -8,3 +8,5 @@ Elasticsearch::Model.client = Elasticsearch::Client.new(
 )
 
 $es = Elasticsearch::Model.client
+
+$es_settings = JSON.parse(File.read("#{Rails.root}/config/es_settings.json"))
