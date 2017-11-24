@@ -5,7 +5,7 @@ module Indexable
     include Elasticsearch::Model
 
     index_name ["nih", self.table_name].join('_')
-    document_type ["nil", self.model_name.singular].join('_')
+    document_type ["nih", self.model_name.singular].join('_')
   end
 
   def document_type

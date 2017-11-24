@@ -9,7 +9,8 @@ class PatentsFile < ExporterFile
   def sync_csv
     ProjectPatent.delete_all
     Patent.delete_all
-    CSV.parse(content, headers: true) do |row|
+    csv = content.read.scrub
+    CSV.parse(csv, headers: true) do |row|
       attributes = attributes(row)
       ProjectPatent.find_or_create_by attributes.slice(:patent_id, :project_id, :exporter_file_id)
       patent = Patent.find_or_initialize_by attributes.slice(:patent_id, :exporter_file_id)

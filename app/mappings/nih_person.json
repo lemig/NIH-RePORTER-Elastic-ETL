@@ -1,0 +1,23 @@
+{
+  "nih_person": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "pi_id": {
+        "type": "long"
+      },
+      "pmid": {
+        "type": "long"
+      }
+    }
+  }
+}

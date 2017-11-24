@@ -1,0 +1,65 @@
+{
+  "nih_publication": {
+    "properties": {
+      "author_name": {
+        "type": "text",
+        "fields": {
+          "raw": {
+              "type":  "keyword"
+          }
+        }
+      },
+      "abstract": {
+        "type": "text", "analyzer": "my_analyzer"
+      },
+      "core_project_num": {
+        "type": "keyword"
+      },
+      "country": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "long"
+      },
+      "issn": {
+        "type": "keyword"
+      },
+      "journal_issue": {
+        "type": "long"
+      },
+      "journal_title": {
+        "type": "text", "analyzer": "my_analyzer"
+      },
+      "journal_title_abbr": {
+        "type": "keyword"
+      },
+      "journal_volume": {
+        "type": "long"
+      },
+      "lang": {
+        "type": "keyword"
+      },
+      "min_pub_date": {
+        "type":"date","format":"strict_date_optional_time||epoch_millis"
+      },
+      "page_number": {
+        "type": "keyword"
+      },
+      "pmc_id": {
+        "type": "long"
+      },
+      "pmid": {
+        "type": "long"
+      },
+      "pub_date": {
+        "type": "keyword"
+      },
+      "pub_title": {
+        "type": "text"
+      },
+      "pub_year": {
+        "type": "long"
+      }
+    }
+  }
+}

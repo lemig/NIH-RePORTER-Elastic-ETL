@@ -1,0 +1,36 @@
+{
+  "nih_organization": {
+    "properties": {
+      "address": {
+        "type": "text"
+      },
+      "application_id": {
+        "type": "long"
+      },
+      "city": {
+        "type": "keyword"
+      },
+      "country": {
+        "type": "keyword"
+      },
+      "duns": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "long"
+      },
+      "location": {
+        "type": "geo_point"
+      },
+      "name": {
+        "type": "text"
+      },
+      "state": {
+        "type": "keyword"
+      },
+      "zip": {
+        "type": "keyword"
+      }
+    }
+  }
+}

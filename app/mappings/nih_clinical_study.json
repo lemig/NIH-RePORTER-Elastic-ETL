@@ -1,0 +1,21 @@
+{
+  "nih_clinical_study": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "core_project_num": {
+        "type": "keyword"
+      },
+      "clinical_trials_gov_id": {
+        "type": "keyword"
+      },
+      "study": {
+        "type": "text", "analyzer": "my_analyzer"
+      },
+      "study_status": {
+        "type": "keyword"
+      }
+    }
+  }
+}

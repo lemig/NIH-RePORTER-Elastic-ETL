@@ -1,0 +1,26 @@
+{
+  "nih_patent": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "patent_id": {
+        "type": "keyword"
+      },
+      "patent_org_name": {
+        "type": "text", "analyzer": "my_analyzer",
+        "fields": {
+          "raw": {
+              "type": "keyword"
+          }
+        }
+      },
+      "patent_title": {
+        "type": "text", "analyzer": "my_analyzer"
+      },
+      "project_core_num": {
+        "type": "keyword"
+      }
+    }
+  }
+}

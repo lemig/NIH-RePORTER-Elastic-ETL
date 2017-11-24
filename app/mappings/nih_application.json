@@ -1,5 +1,5 @@
 {
-  "project": {
+  "nih_application": {
     "properties": {
       "abstract_text": {
         "type": "text", "analyzer": "my_analyzer"
@@ -13,8 +13,23 @@
       "application_id": {
         "type": "long"
       },
+      "application_type": {
+        "type": "keyword"
+      },
       "arra_funded": {
         "type": "keyword"
+      },
+      "award_notice_date": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "budget_end": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "budget_start": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
       },
       "cfda_code": {
         "type": "keyword"
@@ -28,7 +43,16 @@
       "cpn_sp_id": {
         "type": "keyword"
       },
+      "direct_cost_amt": {
+        "type": "long"
+      },
       "ed_inst_type": {
+        "type": "keyword"
+      },
+      "foa_number": {
+        "type": "keyword"
+      },
+      "full_project_num": {
         "type": "keyword"
       },
       "funding_i_cs": {
@@ -37,10 +61,16 @@
       "funding_mechanism": {
         "type": "keyword"
       },
+      "fy": {
+        "type": "long"
+      },
       "ic_name": {
         "type": "keyword"
       },
       "id": {
+        "type": "long"
+      },
+      "indirect_cost_amt": {
         "type": "long"
       },
       "nih_spending_cats": {
@@ -49,7 +79,7 @@
             "type": "text", "analyzer": "my_analyzer",
             "fields": {
               "raw": {
-                "type": "keyword"
+                "type":  "keyword"
               }
             }
           }
@@ -65,10 +95,10 @@
         "type": "long"
       },
       "phr": {
-        "type": "text", "analyzer": "my_analyzer"
+        "type": "string", "analyzer": "my_analyzer"
       },
       "program_officer_name": {
-        "type": "text",
+        "type": "string",
         "fields": {
           "raw": {
               "type":  "keyword"
@@ -86,7 +116,7 @@
       "project_terms": {
         "properties": {
           "term": {
-            "type": "text", "analyzer": "my_analyzer",
+            "type": "string", "analyzer": "my_analyzer",
             "fields": {
               "raw": {
                 "type":  "keyword"
@@ -96,7 +126,7 @@
         }
       },
       "project_title": {
-        "type": "text", "analyzer": "my_analyzer"
+        "type": "string", "analyzer": "my_analyzer"
       },
       "pmid": {
         "type": "long"
@@ -112,6 +142,18 @@
       },
       "subproject_id": {
         "type": "keyword"
+      },
+      "suffix": {
+        "type": "keyword"
+      },
+      "support_year": {
+        "type": "keyword"
+      },
+      "total_cost": {
+        "type": "long"
+      },
+      "total_cost_sub_project": {
+        "type": "long"
       }
     }
   }

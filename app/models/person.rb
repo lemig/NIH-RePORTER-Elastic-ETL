@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  include Elasticsearch::Model
+  include Indexable
 
   has_and_belongs_to_many :projects
   has_and_belongs_to_many :publications
