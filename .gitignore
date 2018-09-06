@@ -15,3 +15,5 @@
 # Ignore local proxy and ssl settings
 /config/initializers/proxy.rb
 /config/initializers/ssl.rb
+
+.byebug_history

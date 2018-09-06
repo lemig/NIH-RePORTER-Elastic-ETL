@@ -1,6 +1,11 @@
 require "open-uri"
 require "zip"
 
+# https://stackoverflow.com/questions/10496874/why-does-openuri-treat-files-under-10kb-in-size-as-stringio
+# Don't allow downloaded files to be created as StringIO. Force a tempfile to be created.
+OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
+OpenURI::Buffer.const_set 'StringMax', 0
+
 class ExporterFile < ActiveRecord::Base
   TYPES = [
     'ProjectsFile',
