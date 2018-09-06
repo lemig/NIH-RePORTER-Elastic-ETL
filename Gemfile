@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.10'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -11,9 +11,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "rubyzip"
-gem 'elasticsearch', branch: '5.x'
-gem 'elasticsearch-rails', branch: '5.x'
-gem 'elasticsearch-model', branch: '5.x'
+gem 'elasticsearch', github: 'elastic/elasticsearch-ruby', branch: '5.x'
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '5.x'
 gem 'httparty'
 gem 'countries', :require => 'countries/global'
 gem 'geokit-rails'
