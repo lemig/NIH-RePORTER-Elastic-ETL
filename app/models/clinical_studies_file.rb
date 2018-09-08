@@ -5,14 +5,17 @@ class ClinicalStudiesFile < ExporterFile
   alias_method :extracted_records, :clinical_studies
 
   def sync_csv
+    count = 0
     ProjectClinicalStudy.delete_all
     ClinicalStudy.delete_all
-    CSV.parse(content, headers: true) do |row|
-      attributes = attributes(row)
-      ProjectClinicalStudy.find_or_create_by attributes.slice(:core_project_number, :clinical_trials_gov_id, :exporter_file_id)
-      clinical_study = ClinicalStudy.find_or_initialize_by attributes.slice(:clinical_trials_gov_id, :exporter_file_id)
-      clinical_study.update attributes.except(:core_project_number)
-      print '.'
+    CSV.parse(content.read.scrub, headers: true) do |row|
+      count += 1
+      puts count
+        attributes = attributes(row)
+        ProjectClinicalStudy.find_or_create_by attributes.slice(:core_project_number, :clinical_trials_gov_id, :exporter_file_id)
+        clinical_study = ClinicalStudy.find_or_initialize_by attributes.slice(:clinical_trials_gov_id, :exporter_file_id)
+        clinical_study.update attributes.except(:core_project_number)
+        print '.'
     end
   end
 end
