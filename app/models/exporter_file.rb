@@ -123,32 +123,37 @@ class ExporterFile < ActiveRecord::Base
   def sync_xml
     batch = []
     record_count = 0
-    not_persisted = 0
+    created_count = 0
+    updated_count = 0
 
     Nokogiri::XML::Reader(content).each do |node|
       next unless node.name == 'row'
       row = Hash.from_xml(node.outer_xml)['row']
       next if row.blank?
+      record_count += 1
+
 
       batch << attributes(row).merge(exporter_file_id: id).except(*skipped_attributes)
 
       if batch.size == 100
         begin
-          models = model.create batch
-          record_count       += models.count
-          not_persisted += models.count{|m| !m.persisted?}
-        rescue
+          model.create! batch
+          created_count += batch.size
+        rescue ActiveRecord::RecordNotUnique
           batch.each do |attr|
             begin
-              model.create attr
-            rescue
-              not_persisted += 1
-            ensure
-              record_count += 1
+              model.create! attr
+              created_count += 1
+            rescue ActiveRecord::RecordNotUnique => e
+              re = /DETAIL:  Key \((?<field>\w+)\)=\((?<value>\d+)\) already exists./
+              unique_identifier = Hash[*e.message.match(re).named_captures.values] # example: {"application_id"=>"9729908"} 
+              record = model.find_by unique_identifier
+              record.update_attributes! attr.reject{ |k, v| v.blank? }
+              updated_count += 1
             end
           end
         end
-        puts "#{record_count} records, #{not_persisted} not persisted"
+        puts "#{record_count} records, #{created_count} created, #{updated_count} updated"
         batch.clear
       end
       self.record_count = record_count
@@ -175,5 +180,10 @@ class ExporterFile < ActiveRecord::Base
       attr[key]= value
     end
     attr
+  end
+
+  def process_batch(batch)
+    #TO DO: extract block here
+    # Call function again for last batch under 100 record 
   end
 end
