@@ -44,19 +44,29 @@ namespace :extract do
       pis = [pis] unless pis.kind_of? Array
 
       pis.each do |pi|
-        begin
-          pi_name = pi['PI_NAME'] || pi['pi_name']
-          pi_name = pi_name.gsub('(contact)', '').strip
-          pi_id = pi['PI_ID'] || pi['pi_id']
-          pi_id = pi_id.gsub('(contact)', '').strip.to_i
+        pi_name = pi['PI_NAME'] || pi['pi_name']
+        pi_id = pi['PI_ID'] || pi['pi_id']
 
+        next if pi_name.blank?
+        next if pi_id.blank?
+
+        pi_name = pi_name.to_s.gsub('(contact)', '').strip
+        pi_id = pi_id.to_s.gsub('(contact)', '').strip.to_i
+
+        begin
           person = Person.find_or_create_by pi_id: pi_id, name: pi_name
-          person.projects << project unless project.in? person.projects
-          person.save
-          print '.'
-        rescue
+        rescue ActiveRecord::RecordNotUnique
+          # Sometime small name diffs: "COX, NANCY J." vs "COX, NANCY J"
+          person = Person.find_by pi_id: pi_id
+          puts "#{person.name} vs #{pi_name}"
+        rescue Exception => e
+          byebug
           print 'e'
         end
+
+        person.projects << project unless project.in? person.projects
+        person.save
+        print '.'
       end
     end
     puts "Finished extracting principal investigators"
@@ -64,10 +74,10 @@ namespace :extract do
 
   task :authors => :environment do
     puts "Started extracting authors"
-    Publication.all.includes(:authors).find_each do |publication|
-      next if publication.authors.any?
-
-      publication.author_name.each do |name|
+    Publication.joins("LEFT JOIN people_publications ON publications.id = people_publications.publication_id")
+               .where("people_publications.person_id IS NOT NULL")
+               .find_each do |publication|
+      publication.author_names.each do |name|
         begin
           person = Person.find_or_create_by pi_id: nil, name: name
           person.publications << publication unless publication.in? person.publications
