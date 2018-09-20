@@ -1,5 +1,4 @@
-# change me
-host ='https://admin:password@127.0.0.1:9220'
+host ='http://127.0.0.1:9220'
 
 Elasticsearch::Model.client = Elasticsearch::Client.new(
   host: host,
