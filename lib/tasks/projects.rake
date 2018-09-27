@@ -56,5 +56,22 @@ namespace :projects do
     puts "Finished jsonifying spending cats"
   end
 
+  task :fix_award_notice_dates => :environment do
+    puts "Started fixing award notice dates. For example: 2999/01/01"
+
+    count = 0
+    Project
+    .where("award_notice_date > ?", 10.years.from_now) #
+    .find_each do |project|
+      project.award_notice_date = nil
+      project.save
+      project.__elasticsearch__.index_document
+      count += 1
+      puts count if count % 100 == 0
+    end
+
+    puts "Finished fixing award notice dates"
+  end
+
   task :fix => [:jsonify_terms, :fix_project_terms, :fix_nih_spending_cats, :jsonify_spending_cats]
 end
