@@ -75,7 +75,7 @@ namespace :extract do
   task :authors => :environment do
     puts "Started extracting authors"
     Publication.joins("LEFT JOIN people_publications ON publications.id = people_publications.publication_id")
-               .where("people_publications.person_id IS NOT NULL")
+               .where("people_publications.person_id IS NULL")
                .find_each do |publication|
       publication.author_names.each do |name|
         begin
