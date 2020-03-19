@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Diseases</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @diseases.each do |disease| %>
+      <tr>
+        <td><%= link_to disease.name, disease %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

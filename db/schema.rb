@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010100440) do
+ActiveRecord::Schema.define(version: 20180927142933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20171010100440) do
   add_index "clinical_studies", ["clinical_trials_gov_id"], name: "index_clinical_studies_on_clinical_trials_gov_id", unique: true, using: :btree
   add_index "clinical_studies", ["exporter_file_id"], name: "index_clinical_studies_on_exporter_file_id", using: :btree
   add_index "clinical_studies", ["study_status"], name: "index_clinical_studies_on_study_status", using: :btree
+
+  create_table "diseases", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "diseases", ["name"], name: "index_diseases_on_name", using: :btree
 
   create_table "exporter_files", force: :cascade do |t|
     t.string   "name"
