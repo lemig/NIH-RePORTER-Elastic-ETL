@@ -49,9 +49,9 @@ class ExporterFile < ActiveRecord::Base
           when 'Fiscal Year'
             year = column.text.strip.to_i
           when 'XML'
-            xml_path =  column.at_css('a')['href']
+            xml_path =  column.at_css('a')['href'] rescue nil
           when 'CSV'
-            csv_path =  column.at_css('a')['href']
+            csv_path =  column.at_css('a')['href'] rescue nil
           when 'Last Updated Date'
             file_updated_at = Date.strptime(column.text.strip, '%m/%d/%Y')
           else
@@ -93,7 +93,11 @@ class ExporterFile < ActiveRecord::Base
     temp_file = open(url)
     unzipped_path = temp_file.path + "-unzipped"
     Zip::File.open(temp_file).first.extract(unzipped_path)
-    open(unzipped_path)
+    if xml?
+      open(unzipped_path)
+    else
+      open(unzipped_path, "r:ISO-8859-1")
+    end
   end
 
   def skipped_attributes
@@ -162,7 +166,39 @@ class ExporterFile < ActiveRecord::Base
   end
 
   def sync_csv
-    raise "should be defined in subclass"
+    batch = []
+    record_count = 0
+    created_count = 0
+    updated_count = 0
+
+    CSV.parse(content, headers: true) do |row|
+      record_count += 1
+      batch << attributes(row).merge(exporter_file_id: id).except(*skipped_attributes)
+
+      if batch.size == 100
+        begin
+          model.create! batch
+          created_count += batch.size
+        rescue ActiveRecord::RecordNotUnique
+          batch.each do |attr|
+            begin
+              model.create! attr
+              created_count += 1
+            rescue ActiveRecord::RecordNotUnique => e
+              re = /DETAIL:  Key \((?<field>\w+)\)=\((?<value>\d+)\) already exists./
+              unique_identifier = Hash[*e.message.match(re).named_captures.values] # example: {"application_id"=>"9729908"} 
+              record = model.find_by unique_identifier
+              record.update_attributes! attr.reject{ |k, v| v.blank? }
+              updated_count += 1
+            end
+          end
+        end
+        puts "#{record_count} records, #{created_count} created, #{updated_count} updated"
+        batch.clear
+      end
+      self.record_count = record_count
+      save!
+    end
   end
 
   def extracted_records

@@ -6,4 +6,12 @@ class LinkTablesFile < ExporterFile
   def self.model
     ProjectPublication
   end
+
+  def sync_csv
+    CSV.parse(content, headers: true) do |row|
+      attributes = attributes(row)
+      model.find_or_create_by attributes
+      print '.'
+    end
+  end
 end

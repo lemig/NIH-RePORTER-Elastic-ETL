@@ -10,7 +10,7 @@ namespace :sync do
 
   task :data => :environment do
     puts "Started synchronizing Exporter data"
-    ExporterFile.where(processed: false).order("year DESC NULLS LAST, id ASC").each do |ef|
+    LinkTablesFile.where(processed: false).order("year DESC NULLS LAST, id ASC").each do |ef|
       puts "Processing #{ef.name}"
       ef.sync
     end
