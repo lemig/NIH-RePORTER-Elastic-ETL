@@ -77,9 +77,22 @@ test:
 #
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
-#
+
+# remote requires ssh tunnel like this:
+# ssh -fNg -L 5433:127.0.0.1:5432 cryptovision@ns3176713.ip-51-210-113.eu
+remote:
+  <<: *default
+  database: healthresearch_production
+  username: cryptovision
+  password: <%= ENV['CRYPTOVISION_DATABASE_PASSWORD'] %>
+  pool: 5
+  host: 127.0.0.1
+  port: 5433 
+
+
 production:
   <<: *default
-  database: NIH-RePORTER-Elastic-ETL_production
-  username: NIH-RePORTER-Elastic-ETL
-  password: <%= ENV['NIH-REPORTER-ELASTIC-ETL_DATABASE_PASSWORD'] %>
+  database: healthresearch_production
+  username: cryptovision
+  password: <%= ENV['CRYPTOVISION_DATABASE_PASSWORD'] %>
+  pool: 25
