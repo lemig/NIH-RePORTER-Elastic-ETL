@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "2.6.5"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -11,9 +12,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "rubyzip"
-gem 'elasticsearch', github: 'elastic/elasticsearch-ruby', branch: '5.x'
-gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '5.x'
-gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch', git: 'https://github.com/elastic/elasticsearch-ruby', branch: '5.x'
+gem 'elasticsearch-model', git: 'https://github.com/elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch-rails', git: 'https://github.com/elastic/elasticsearch-rails', branch: '5.x'
 gem 'httparty'
 gem 'countries', :require => 'countries/global'
 gem 'geokit-rails'
@@ -38,4 +39,4 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

@@ -1,4 +1,6 @@
 class Organization < ActiveRecord::Base
+  include Indexable
+  
   has_and_belongs_to_many :projects
 
   def get_info

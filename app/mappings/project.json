@@ -2,7 +2,9 @@
   "project": {
     "properties": {
       "abstract_text": {
-        "type": "text", "analyzer": "my_analyzer"
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fielddata": true
       },
       "activity": {
         "type": "keyword"
@@ -65,7 +67,9 @@
         "type": "long"
       },
       "phr": {
-        "type": "text", "analyzer": "my_analyzer"
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fielddata": true
       },
       "program_officer_name": {
         "type": "text",
@@ -96,7 +100,9 @@
         }
       },
       "project_title": {
-        "type": "text", "analyzer": "my_analyzer"
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "fielddata": true
       },
       "pmid": {
         "type": "long"

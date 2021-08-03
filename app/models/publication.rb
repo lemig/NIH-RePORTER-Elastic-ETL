@@ -1,4 +1,6 @@
 class Publication < ActiveRecord::Base
+  include Indexable
+  
   belongs_to :exporter_file
   has_and_belongs_to_many :authors, class_name: 'Person'
 
