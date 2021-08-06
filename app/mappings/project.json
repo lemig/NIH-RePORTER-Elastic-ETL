@@ -1,124 +1,122 @@
 {
-  "project": {
-    "properties": {
-      "abstract_text": {
-        "type": "text",
-        "analyzer": "my_analyzer",
-        "fielddata": true
-      },
-      "activity": {
-        "type": "keyword"
-      },
-      "administering_ic": {
-        "type": "keyword"
-      },
-      "application_id": {
-        "type": "long"
-      },
-      "arra_funded": {
-        "type": "keyword"
-      },
-      "cfda_code": {
-        "type": "keyword"
-      },
-      "clinical_trials_gov_id": {
-        "type": "keyword"
-      },
-      "core_project_num": {
-        "type": "keyword"
-      },
-      "cpn_sp_id": {
-        "type": "keyword"
-      },
-      "ed_inst_type": {
-        "type": "keyword"
-      },
-      "funding_i_cs": {
-        "type": "keyword"
-      },
-      "funding_mechanism": {
-        "type": "keyword"
-      },
-      "ic_name": {
-        "type": "keyword"
-      },
-      "id": {
-        "type": "long"
-      },
-      "nih_spending_cats": {
-        "properties": {
-          "category": {
-            "type": "text", "analyzer": "my_analyzer",
-            "fields": {
-              "raw": {
-                "type": "keyword"
-              }
+  "properties": {
+    "abstract_text": {
+      "type": "text",
+      "analyzer": "my_analyzer",
+      "fielddata": true
+    },
+    "activity": {
+      "type": "keyword"
+    },
+    "administering_ic": {
+      "type": "keyword"
+    },
+    "application_id": {
+      "type": "long"
+    },
+    "arra_funded": {
+      "type": "keyword"
+    },
+    "cfda_code": {
+      "type": "keyword"
+    },
+    "clinical_trials_gov_id": {
+      "type": "keyword"
+    },
+    "core_project_num": {
+      "type": "keyword"
+    },
+    "cpn_sp_id": {
+      "type": "keyword"
+    },
+    "ed_inst_type": {
+      "type": "keyword"
+    },
+    "funding_i_cs": {
+      "type": "keyword"
+    },
+    "funding_mechanism": {
+      "type": "keyword"
+    },
+    "ic_name": {
+      "type": "keyword"
+    },
+    "id": {
+      "type": "long"
+    },
+    "nih_spending_cats": {
+      "properties": {
+        "category": {
+          "type": "text", "analyzer": "my_analyzer",
+          "fields": {
+            "raw": {
+              "type": "keyword"
             }
           }
         }
-      },
-      "organization_ids": {
-        "type": "long"
-      },
-      "patent_id": {
-        "type": "keyword"
-      },
-      "pi_id": {
-        "type": "long"
-      },
-      "phr": {
-        "type": "text",
-        "analyzer": "my_analyzer",
-        "fielddata": true
-      },
-      "program_officer_name": {
-        "type": "text",
-        "fields": {
-          "raw": {
-              "type":  "keyword"
-          }
-        }
-      },
-      "project_end": {
-        "type": "date",
-        "format": "strict_date_optional_time||epoch_millis"
-      },
-      "project_start": {
-        "type": "date",
-        "format": "strict_date_optional_time||epoch_millis"
-      },
-      "project_terms": {
-        "properties": {
-          "term": {
-            "type": "text", "analyzer": "my_analyzer",
-            "fields": {
-              "raw": {
-                "type":  "keyword"
-              }
-            }
-          }
-        }
-      },
-      "project_title": {
-        "type": "text",
-        "analyzer": "my_analyzer",
-        "fielddata": true
-      },
-      "pmid": {
-        "type": "long"
-      },
-      "serial_number": {
-        "type": "keyword"
-      },
-      "study_section": {
-        "type": "keyword"
-      },
-      "study_section_name": {
-        "type": "keyword"
-      },
-      "subproject_id": {
-        "type": "keyword"
       }
+    },
+    "organization_ids": {
+      "type": "long"
+    },
+    "patent_id": {
+      "type": "keyword"
+    },
+    "pi_id": {
+      "type": "long"
+    },
+    "phr": {
+      "type": "text",
+      "analyzer": "my_analyzer",
+      "fielddata": true
+    },
+    "program_officer_name": {
+      "type": "text",
+      "fields": {
+        "raw": {
+            "type":  "keyword"
+        }
+      }
+    },
+    "project_end": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "project_start": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "project_terms": {
+      "properties": {
+        "term": {
+          "type": "text", "analyzer": "my_analyzer",
+          "fields": {
+            "raw": {
+              "type":  "keyword"
+            }
+          }
+        }
+      }
+    },
+    "project_title": {
+      "type": "text",
+      "analyzer": "my_analyzer",
+      "fielddata": true
+    },
+    "pmid": {
+      "type": "long"
+    },
+    "serial_number": {
+      "type": "keyword"
+    },
+    "study_section": {
+      "type": "keyword"
+    },
+    "study_section_name": {
+      "type": "keyword"
+    },
+    "subproject_id": {
+      "type": "keyword"
     }
   }
 }

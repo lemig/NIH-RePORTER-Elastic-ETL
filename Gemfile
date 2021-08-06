@@ -1,20 +1,20 @@
 source 'https://rubygems.org'
-ruby "2.6.5"
+ruby '2.6.6'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.10'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.15'
+gem 'pg', '>= 0.18', '< 2.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "rubyzip"
-gem 'elasticsearch', git: 'https://github.com/elastic/elasticsearch-ruby', branch: '5.x'
-gem 'elasticsearch-model', git: 'https://github.com/elastic/elasticsearch-rails', branch: '5.x'
-gem 'elasticsearch-rails', git: 'https://github.com/elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch', github: 'elastic/elasticsearch-ruby'
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails'
 gem 'httparty'
 gem 'countries', :require => 'countries/global'
 gem 'geokit-rails'
