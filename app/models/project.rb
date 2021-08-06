@@ -2,7 +2,6 @@ class Project < ActiveRecord::Base
   include Indexable
 
   serialize :pis, JSON
-  serialize :project_terms, JSON
   serialize :nih_spending_cats, JSON
 
   belongs_to :exporter_file

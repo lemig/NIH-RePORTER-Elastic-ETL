@@ -86,15 +86,11 @@
       "type": "date",
       "format": "strict_date_optional_time||epoch_millis"
     },
-    "project_terms": {
-      "properties": {
-        "term": {
-          "type": "text", "analyzer": "my_analyzer",
-          "fields": {
-            "raw": {
-              "type":  "keyword"
-            }
-          }
+    "terms": {
+      "type": "text", "analyzer": "my_analyzer",
+      "fields": {
+        "raw": {
+          "type":  "keyword"
         }
       }
     },

@@ -4,10 +4,10 @@ namespace :projects do
 
     count = 0
     Project
-    .where("project_terms = 'null' OR project_terms IS NULL")
+    .where("terms = '{}'")
     .where.not(project_termsx: nil)
     .find_each do |project|
-      project.project_terms = instance_eval(project.project_termsx.to_s).to_json
+      project.terms = instance_eval(project.project_termsx.to_s).as_json["term"]
       project.save
       count += 1
       puts count if count % 100 == 0
@@ -15,17 +15,17 @@ namespace :projects do
     puts "Finished jsonifying project terms"
   end
 
-  task :fix_project_terms => :environment do
-    puts "Started fixing project terms"
+  # task :fix_project_terms => :environment do
+  #   puts "Started fixing project terms"
 
-    ActiveRecord::Base.connection.execute %q[
-      UPDATE projects
-      SET project_terms = project_termsx
-      WHERE project_terms SIMILAR TO '"%' AND project_termsx SIMILAR TO '{%'
-    ]
+  #   ActiveRecord::Base.connection.execute %q[
+  #     UPDATE projects
+  #     SET project_terms = project_termsx
+  #     WHERE project_terms SIMILAR TO '"%' AND project_termsx SIMILAR TO '{%'
+  #   ]
 
-    puts "Finished fixing project terms"
-  end
+  #   puts "Finished fixing project terms"
+  # end
 
   task :fix_nih_spending_cats => :environment do
     puts "Started fixing project spending cats"
