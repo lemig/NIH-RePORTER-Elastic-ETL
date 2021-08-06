@@ -17,3 +17,5 @@
 /config/initializers/ssl.rb
 
 .byebug_history
+.env
+

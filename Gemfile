@@ -18,6 +18,7 @@ gem 'elasticsearch-rails', git: 'https://github.com/elastic/elasticsearch-rails'
 gem 'httparty'
 gem 'countries', :require => 'countries/global'
 gem 'geokit-rails'
+gem 'dotenv-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

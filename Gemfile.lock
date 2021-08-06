@@ -72,6 +72,10 @@ GEM
       unicode_utils (~> 1.4)
     crass (1.0.6)
     debug_inspector (0.0.3)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubis (2.7.0)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
@@ -166,6 +170,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   countries
+  dotenv-rails
   elasticsearch!
   elasticsearch-model!
   elasticsearch-rails!
