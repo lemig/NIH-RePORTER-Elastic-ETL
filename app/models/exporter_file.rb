@@ -186,10 +186,12 @@ class ExporterFile < ActiveRecord::Base
               created_count += 1
             rescue ActiveRecord::RecordNotUnique => e
               re = /DETAIL:  Key \((?<field>\w+)\)=\((?<value>\d+)\) already exists./
-              unique_identifier = Hash[*e.message.match(re).named_captures.values] # example: {"application_id"=>"9729908"} 
-              record = model.find_by unique_identifier
-              record.update_attributes! attr.reject{ |k, v| v.blank? }
-              updated_count += 1
+              if e.message.match(re)
+                unique_identifier = Hash[*e.message.match(re).named_captures.values] # example: {"application_id"=>"9729908"} 
+                record = model.find_by unique_identifier
+                record.update_attributes! attr.reject{ |k, v| v.blank? }
+                updated_count += 1
+              end
             end
           end
         end
